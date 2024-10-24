@@ -6,7 +6,7 @@
 /*   By: piesito <piesito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 20:57:00 by piesito           #+#    #+#             */
-/*   Updated: 2024/10/24 23:51:22 by piesito          ###   ########.fr       */
+/*   Updated: 2024/10/25 01:45:08 by piesito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,37 +21,37 @@ int	ft_print_str(char *str)
 {
 	int	i;
 
+	if (!str)
+		return (ft_printf("(null)"));
 	i = 0;
 	while (str[i])
 		write(1, &str[i++], 1);
 	return (i);
 }
 
-int	ft_print_dgt(int n)
+int	ft_print_num(long n, char c)
 {
-	char	*str;
+	char	*chars;
+	int		i;
+	int		base;
 
-	str = ft_itoa(n);
-	return (ft_print_str(str));
-}
-
-int	ft_print_udt(unsigned int n)
-{
-	int	i;
-	if (n >= 10)
-	{
-		i += ft_print_udt(n / 10);
-	}
-	i += write(1, &((char []){(n % 10) + '0', '\0'}), 1);
-	return (i);
-}
-
-int	ft_print_hex(unsigned int n, char c)
-{
-	char	*base;
-
-	if (c = 'x')
-		base = "0123456789abcdef";
+	i = 0;
+	if (c == 'x')
+		chars = "0123456789abcdef";
+	if (c == 'X')
+		chars = "0123456789ABCDEF";
+	if (c == 'd' || c == 'i' || c == 'u')
+		chars = "0123456789";
+	if (c == 'u')
+		n = (unsigned long)n;
+	base = ft_strlen(chars);
+	if (n < 0)
+		return (ft_print_chr('-') + ft_print_num(-n, c));
+	else if (n < base)
+		return (ft_print_chr(chars[n]));
 	else
-		base = "0123456789ABCDEF";
+	{
+		i = ft_print_num(n / base, c);
+		return (i + ft_print_num(n % base, c));
+	}
 }
