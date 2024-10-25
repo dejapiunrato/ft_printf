@@ -28,6 +28,7 @@ int	ft_parse(char c, va_list args);
 // ft_printf_utils.c
 int	ft_print_chr(char c);
 int	ft_print_str(char *str);
+int	ft_print_ptr(unsigned long ptr);
 int	ft_print_num(long n, char c);
 
 #endif

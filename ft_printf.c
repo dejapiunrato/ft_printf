@@ -21,8 +21,8 @@ int	ft_parse(char c, va_list args)
 		i += ft_print_chr(va_arg(args, int));
 	else if (c == 's')
 		i += ft_print_str(va_arg(args, char *));
-/* 	else if (c == 'p')
-		i += ft_print_ptr(va_arg(args, void *)); */
+	else if (c == 'p')
+		i += ft_print_ptr((unsigned long)va_arg(args, void *));
 	else if (c == 'd' || c == 'i')
 		i += ft_print_num((long)va_arg(args, int), c);
 	else if (c == 'x' || c == 'X' || c == 'u')
