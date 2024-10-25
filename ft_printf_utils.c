@@ -55,3 +55,18 @@ int	ft_print_num(long n, char c)
 		return (i + ft_print_num(n % base, c));
 	}
 }
+
+int	ft_print_ptr(unsigned long ptr, char c)
+{
+	int	i;
+
+	i = 0;
+	if (!ptr)
+		return (ft_printf("(nill)"));
+	else
+	{
+		i += ft_printf("0x");
+		i += ft_print_num(ptr, c);
+	}
+	return (i);
+}
