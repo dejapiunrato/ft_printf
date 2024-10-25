@@ -10,14 +10,44 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libftprintf.a
+NAME		= libftprintf.a
 
-CC = cc
-CCFLAGS = -Wall -Werror -Wextra
-RM = rm -rf
+CC			= cc
+CCFLAGS		= -Wall -Werror -Wextra
+RM			= rm -rf
 
-SRCS =	ft_flags.c \
-		ft_printf_utils.c \
-		ft_printf.c
+SRCS		=	ft_printf.c \
+				ft_printf_utils.c
 
-OBJS = $(SRCS: .c=.o)
+OBJS_DIR	= objs
+OBJS 		= $(SRCS:%.c=$(OBJS_DIR)/%.o)
+
+LIBFT_DIR	= ./libft
+LIBFT		= $(LIBFT_DIR)/libft.a
+
+$(OBJS_DIR)/%.o: %.c
+	@$(CC) $(CCFLAGS) -c $< -o $@
+
+all:		$(NAME)
+
+$(NAME):	$(LIBFT) $(OBJS_DIR) $(OBJS)
+	@cp $(LIBFT) $(NAME)
+	@ar crs $(NAME) $(OBJS)
+
+$(LIBFT):
+	@make -C $(LIBFT_DIR) bonus
+
+$(OBJS_DIR):
+	@mkdir -p $(OBJS_DIR)
+
+clean: 
+	@make -C $(LIBFT_DIR) clean
+	@$(RM) $(OBJS_DIR)
+
+fclean:	clean
+	@make -C $(LIBFT_DIR) fclean
+	@$(RM) $(NAME)
+
+re:		fclean all
+
+.PHONY: all clean fclean re
